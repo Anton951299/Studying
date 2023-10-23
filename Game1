@@ -1,0 +1,100 @@
+field=[[" "]*3 for i in range(3)]
+def pole():
+    print(" ", 0, 1, 2)
+    for i in range(3):
+        row_field=" ".join(field[i])
+        print(f"{i} {row_field}")
+
+def ask():
+    while True:
+        cords=input("Vvedite koordinaty: ").split()
+        if len(cords)!=2:
+            print("Vvedite 2 chisla")
+            continue
+        x,y=cords
+        if not(x.isdigit()) or not (y.isdigit()):
+            print("Vvedite 2 chisla")
+            continue
+        x,y=int(x),int(y)
+
+        if x<0 or x>2 or y<0 or y>2:
+            print("Vvedite chisla ot 0 do 2")
+            continue
+        if field[x][y] != " ":
+            print("Клетка занята")
+            continue
+        return x,y
+
+def check_win():
+    for i in range(3):
+        symbols = []
+        for j in range(3):
+            symbols.append(field[i][j])
+        if symbols == ["X", "X", "X"]:
+            print("Pobeda X")
+            return True
+
+    for i in range(3):
+        symbols = []
+        for j in range(3):
+            symbols.append(field[j][i])
+        if symbols == ["X", "X", "X"]:
+            print("Pobeda X")
+            return True
+
+    symbols = []
+    for j in range(3):
+        symbols.append((field[i][i]))
+    if symbols == ["X", "X", "X"]:
+        print("Pobeda X")
+        return True
+    for j in range(3):
+        symbols.append((field[i][2 - i]))
+    if symbols == ["X", "X", "X"]:
+        print("Pobeda X")
+        return True
+    for i in range(3):
+        symbols = []
+        for j in range(3):
+            symbols.append(field[i][j])
+        if symbols == ["O", "O", "O"]:
+            print("Pobeda O")
+            return True
+    for i in range(3):
+        symbols = []
+        for j in range(3):
+            symbols.append(field[j][i])
+        if symbols == ["O", "O", "O"]:
+            print("Pobeda O")
+            return True
+    symbols = []
+    for j in range(3):
+        symbols.append((field[i][i]))
+    if symbols == ["O", "O", "O"]:
+        print("Pobeda O")
+        return True
+    for j in range(3):
+        symbols.append((field[i][2 - i]))
+    if symbols == ["O", "O", "O"]:
+        print("Pobeda O")
+        return True
+    return False
+num=0
+while True:
+    num+=1
+    pole()
+    if num%2==1:
+        print("Hod X")
+    else:
+        print("Hod O")
+    x,y=ask()
+    if num%2==1:
+        field[x][y] = "X"
+    else:
+        field[x][y]="O"
+
+    if check_win():
+        break
+    if num==9:
+        print("Nichya")
+        break
